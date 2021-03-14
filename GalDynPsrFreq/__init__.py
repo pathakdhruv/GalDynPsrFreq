@@ -1,7 +1,7 @@
 name = "GalDynPsrFreq"
 
 
-print("Odering of arguments in all functions in . is very important. Consult the README.md (online) or the README.txt file residing in the installation directory")
+print("Odering of arguments in all functions in GalDynPsrFreq is very important. Consult the README.md (online) or the README.txt file residing in the installation directory")
 
 
 from . import read_parameters
