@@ -12,7 +12,7 @@ A brief outline of the usage of GalDynPsrFreq is given below.
 
 # 1) Install GalDynPsrFreq as pip3 install GalDynPsrFreq (assuming you have numpy, scipy, and galpy already installed and working)
 
-If wished, one can change the values of Rs (Galactocentric cylindrical radius of the sun) and Vs (rotational speed of the Sun around the Galactic centre) in the parameters.in file that can be found inside the GalDynPsrFreq (installed directory).
+If wished, one can change the values of Rs (Galactocentric cylindrical radius of the Sun) and Vs (rotational speed of the Sun around the Galactic centre) in the parameters.in file that can be found inside the GalDynPsrFreq (installed directory).
 But remember that galpy also has these values defined in the file '$home/.galpyrc'. One can in principle change the values in both of the files. However, the Milky Way potential in galpy was fitted with Rs = 8 kpc and Vs = 220 km/s in galpy.
 
 
@@ -31,7 +31,7 @@ The frequency and its derivatives can either be spin or orbital.
 
 # 4) Remember that the model names are case sensitive, so use them as demonstrated below. Also, for each case, ordering of the parameters must be as shown.
 
-# 5) Calculate the Galactic contribution to the excess terms for the first frequency derivative using either the model that does not take into account the central black hole contribution to the Milky Way Potential (Model excGal), or the model that takes into account the central black hole (BH) contribution to the Milky Way Potential (Model excGalBH) 
+# 5) Calculate the Galactic contribution to the excess terms for the first derivative of the frequency using either the model that does not take into account the central black hole contribution to the Milky Way Potential (Model excGal), or the model that takes into account the central black hole (BH) contribution to the Milky Way Potential (Model excGalBH) 
 The usage of these models is shown below.
 
 a) When not incorporating the BH contribution to the Milky Way Potential: Model excGal-
@@ -69,15 +69,16 @@ One needs to assign the values of ldeg, bdeg, dkpc, mul, and mub before calling 
 
 # 8)Print the basic parameters of the pulsars
 
-GalDynPsrFreq.read_parameters.Rskpc returns the Galactocentric cylindrical radius of the sun.
 
-GalDynPsrFreq.read_parameters.Vs returns the rotational speed of the sun around the Galactic centre.
+GalDynPsrFreq.read_parameters.Rskpc returns the Galactocentric cylindrical radius of the Sun (Rs in kpc or Rskpc).
 
-GalDynPsrFreq.read_parameters.Rpkpc(ldeg, bdeg, dkpc) returns the value of Galactocentric cylindrical radius of the pulsar in kpc.
+GalDynPsrFreq.read_parameters.Vs returns the rotational speed of the Sun around the Galactic centre (Vs in km/s).
 
-GalDynPsrFreq.read_parameters.z(ldeg, bdeg, dkpc) returns the perpendicular displacement of the pulsar from the Galactic plane. 
-The meaning of the arguments are as usual.
+GalDynPsrFreq.read_parameters.Rpkpc(ldeg, bdeg, dkpc) returns the value of Galactocentric cylindrical radius of the pulsar in kpc (Rp in kpc or Rpkpc).
 
+GalDynPsrFreq.read_parameters.z(ldeg, bdeg, dkpc) returns the perpendicular distance of the pulsar from the Galactic plane (z in kpc or zkpc). 
+
+The meaning of the arguments in the above examples are as usual.
 
 
 # 9) Calculate the intrinsic frequency derivative 
@@ -89,7 +90,7 @@ The total dynamically caused value of the frequency derivative is the addition o
 
 GalDynPsrFreq.fdotint.fdotintcal(ldeg, bdeg, dkpc, mul, mub, f, fdotobs)
 
-Here, in addition to assigning the values of ldeg, bdeg, dkpc, mul, and mub, one needs to also assign the values of the frequency 'f' in Hz, the measured value of the frequency derivative 'fdotobs' in seconds^(-2).
+Here, in addition to assigning the values of ldeg, bdeg, dkpc, mul, and mub, one needs to also assign the values of the frequency 'f' in Hz, and the measured value of the frequency derivative 'fdotobs' in seconds^(-2).
 
 Additionally, the individual contributions can also be calculated using the fdotint.py module in GalDynPsrFreq as,
 
@@ -106,7 +107,7 @@ As explained in a) part, The intrinsic value of the frequency derivative can be 
 
 GalDynPsrFreq.fdotint.fdotintcalBH(ldeg, bdeg, dkpc, mul, mub, f, fdotobs)
 
-Here, in addition to assigning the values of ldeg, bdeg, dkpc, mul, and mub, one needs to also assign the values of the frequency 'f' in Hz, the measured value of the frequency derivative 'fdotobs' in seconds^(-2).
+Here, in addition to assigning the values of ldeg, bdeg, dkpc, mul, and mub, one needs to also assign the values of the frequency 'f' in Hz, and the measured value of the frequency derivative 'fdotobs' in seconds^(-2).
 
 
 Additionally, the individual contributions can also be calculated using the fdotint.py module in GalDynPsrFreq as,
@@ -127,7 +128,7 @@ Here, in addition to assigning the values of dkpc, mul, and mub, one needs to al
 
 
 
-# 10) Calculate the excess terms in the frequency second derivative 
+# 10) Calculate the excess terms in the second derivative of the frequency 
 
 For dynamical contributions in the second derivative of the frequency, we use the following modules from GalDynPsrFreq.
 
@@ -150,12 +151,12 @@ GalDynPsrFreq.fdotdotSB3BH.fdotdotSB3calBH(ldeg, bdeg, dkpc, mul, mub, vrad) #fo
 GalDynPsrFreq.fdotdotSB4BH.fdotdotSB4calBH(ldeg, bdeg, dkpc, mul, mub, f, fdotobs) #for calculating the fourth square bracket term of Eq. (11) of the paper Pathak and Bagchi (2021)
   
 
-Here, for both the cases, in addition to assigning the values of ldeg, bdeg, dkpc, mul, mub, f, and fdotobs, one needs to also assign the measured value of the radial velocity, 'vrad', in km/s.
+Here, for both the cases, in addition to assigning the values of ldeg, bdeg, dkpc, mul, mub, f, and fdotobs, one needs to also assign the measured value of the radial component of the relative velocity of the pulsar, 'vrad', in km/s.
 
 
-# 11) Calculate the intrinsic frequency second derivative 
+# 11) Calculate the intrinsic second derivative of the frequency 
 
-For dynamical contributions in the second derivative of the frequency, we use the following modules from GalDynPsrFreq.
+For calculating the intrinsic value of the second derivative of the frequency, we use the following modules from GalDynPsrFreq.
 
 a)When not incorporating the BH contribution to the Milky Way Potential: Model fdotdotintcal-
 GalDynPsrFreq.fdotdotint.fdotdotintcal(ldeg,bdeg,dkpc,mul,mub,f,fdotobs,vrad,fdotdotobs) 
@@ -196,7 +197,7 @@ zkpc = GalDynPsrFreq.read_parameters.z(ldeg, bdeg, dkpc)
 
 ### We need to provide the values of the proper motion in the Galactic longitude direction and the proper motion in the Galactic latitude direction
 
-### mul = proper motion in the Galactic longitude direction (mas/yr), mub = proper motion in the Galactic latitude direction (mas/yr)
+### mul = proper motion in the Galactic longitude direction (in mas/yr), mub = proper motion in the Galactic latitude direction (in mas/yr)
 
 mul = 20.0
 mub = 20.0
@@ -238,7 +239,7 @@ fdotfex = GalDynPsrFreq.fdotexc.fdotexctot(ldeg, bdeg, dkpc, mul, mub)
 fdotfex = GalDynPsrFreq.fdotexcBH.fdotexctotBH(ldeg, bdeg, dkpc, mul, mub)
 
 
-### #####For the intrinsic frequency derivative calculations#####
+### #####Compute the intrinsic value of the first derivative of the frequency#####
 
 ### Additional observable parameters required for the spin (or orbital) frequency derivative calcuations: f = frequency in Hz, fdotobs = measured value of the frequency derivative in s^-2
  
@@ -282,8 +283,8 @@ fdot_Gal = GalDynPsrFreq.fdotint.fdotGalcalBH(ldeg, bdeg, dkpc, f) #calculates t
 
 
 
-### #####Compute excess term for second derivative of frequency#####
-### Additional observable parameters required: vrad = radial velocity in km/s
+### #####Compute the excess term for second derivative of the frequency#####
+### Additional observable parameters required: vrad = radial component of the relative velocity of the pulsar in km/s
 
 vrad = 20.0
 
@@ -299,7 +300,7 @@ fddotfex = GalDynPsrFreq.fdotdotexcBH.fdotdotexccalBH(ldeg, bdeg, dkpc, mul, mub
 
 
 
-### #####Intrinsic second derivative of frequency calculations#####
+### #####Compute the intrinsic value of the second derivative of the frequency#####
 ### Additional observable parameters required: fdotdotobs = observed second derivative of the frequency in s^-3
 
 fdotdotobs = 1.2e-28
@@ -326,7 +327,7 @@ import GalDynPsrFreq
 
 ldeg = 20.0
 
-bdeg=20.0
+bdeg= 20.0
 
 dkpc = 2.0
 
@@ -414,7 +415,7 @@ fdotexc.py: Calculates the total excess term in the first derivative of the freq
 
 fdotexcBH.py: Calculates the total excess term in the first derivative of the frequency incorporating the effect of the central black hole in the gravitational potential of the Milky Way. The required arguments for this module are ldeg, bdeg, dkpc, mul, and mub.
 
-fdotint.py: Calculates the intrinsic frequency derivative for both cases- when the contribution of the central black hole to the gravitational potential of the Milky Way is not included (Model fdotintcal) and when that contribution is included (Model fdotintcalBH). The required arguments for this module are ldeg, bdeg, dkpc, mul, mub, and f. Also, this module can calculate the individual frequency derivative contributions from the parallel and the perpendicular components of relative acceleration, and from the Shklovskii term. 
+fdotint.py: Calculates the intrinsic frequency derivative for both cases- when the contribution of the central black hole to the gravitational potential of the Milky Way is not included (Model fdotintcal) and when that contribution is included (Model fdotintcalBH). The required arguments for this module are ldeg, bdeg, dkpc, mul, mub, and f. Also, this module can separately calculate the individual frequency derivative contributions from the parallel and the perpendicular components of relative acceleration, and from the Shklovskii term. 
 
 fdotdotSB1.py: Calculates the first square bracket term of Eq. (11) of the paper Pathak and Bagchi (2021) without the contribution of the central black hole. The required arguments for this module are ldeg, bdeg, dkpc, mul, mub, and vrad.
 
@@ -432,11 +433,11 @@ fdotdotSB3BH.py: Calculates the third square bracket term of Eq. (11) of the pap
 
 fdotdotSB4BH.py: Calculates the fourth square bracket term of Eq. (11) of the paper Pathak and Bagchi (2021) incorporating the contribution of the central black hole. The required arguments for this module are ldeg, bdeg, dkpc, mul, mub, f, and fdotobs.
 
-fdotdotexc.py: Model fdotdotexc: Calculates the total excess term for the second derivative of the frequency without incorporating the effect of the central black hole in the gravitational potential of the Milky Way. The required arguments for this module are ldeg, bdeg, dkpc, mul, mub, f, fdotobs, and vrad.
+fdotdotexc.py: Model fdotdotexc- Calculates the total excess term for the second derivative of the frequency without incorporating the effect of the central black hole in the gravitational potential of the Milky Way. The required arguments for this module are ldeg, bdeg, dkpc, mul, mub, f, fdotobs, and vrad.
 
-fdotdotexcBH.py: Model fdotdotexcBH: Calculates the total excess term for the second derivative of the frequency incorporating the effect of the central black hole in the gravitational potential of the Milky Way. The required arguments for this module are ldeg, bdeg, dkpc, mul, mub, f, fdotobs, and vrad.
+fdotdotexcBH.py: Model fdotdotexcBH- Calculates the total excess term for the second derivative of the frequency incorporating the effect of the central black hole in the gravitational potential of the Milky Way. The required arguments for this module are ldeg, bdeg, dkpc, mul, mub, f, fdotobs, and vrad.
 
-fdotdotint.py: Calculates the intrinsic frequency second derivative for both cases, when the contribution of the central black hole to the gravitational potential of the Milky Way is not included (Model fdotdotintcal) and when that contribution is included (Model fdotdotintcalBH). The required arguments for this module are ldeg, bdeg, dkpc, mul, mub, f, fdotobs, vrad, and fdotdotobs. 
+fdotdotint.py: Calculates the intrinsic value of the second derivative of the frequency for both cases, i.e.,  when the contribution of the central black hole to the gravitational potential of the Milky Way is not included (Model fdotdotintcal) and when that contribution is included (Model fdotdotintcalBH). The required arguments for this module are ldeg, bdeg, dkpc, mul, mub, f, fdotobs, vrad, and fdotdotobs. 
 
 ############################################################
 
