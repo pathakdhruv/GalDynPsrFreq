@@ -53,8 +53,8 @@ def fdotdotSB2cal(ldeg,bdeg,dkpc,mul,mub):
     #MWPotential2014= [MWPotential2014,KeplerPotential(amp=4*10**6./bovy_conversion.mass_in_msol(par.Vs,par.Rskpc))] 
     MWPot = MWPotential2014  
 
-    appl = evaluateRforces(MWPot, Rpkpc/Rskpc,zkpc/Rskpc)*normForcetoSI
-    aspl = evaluateRforces(MWPot, Rskpc/Rskpc,0.0/Rskpc)*normForcetoSI
+    appl = -evaluateRforces(MWPot, Rpkpc/Rskpc,zkpc/Rskpc)*normForcetoSI
+    aspl = -evaluateRforces(MWPot, Rskpc/Rskpc,0.0/Rskpc)*normForcetoSI
     apz = evaluatezforces(MWPot, Rpkpc/Rskpc,zkpc/Rskpc)*normForcetoSI
 
 
@@ -64,7 +64,7 @@ def fdotdotSB2cal(ldeg,bdeg,dkpc,mul,mub):
 
 
 
-    res1 = 2.*(mastorad/yrts)*(mub*((math.sin(b)/c)*(appl*coslam + aspl*math.cos(l)) - (math.cos(b)/c)*apz) - mul*(math.sin(l)/c)*(appl*(Rskpc/Rpkpc)-aspl))
+    res1 = 2.*(mastorad/yrts)*(mub*((math.sin(b)/c)*(appl*coslam + aspl*math.cos(l)) + (math.cos(b)/c)*apz) - mul*(math.sin(l)/c)*(appl*(Rskpc/Rpkpc)-aspl))
 
     res2 = 2.*fex_tot*(math.cos(b)*math.cos(l)*(aspl/c) + (mastorad/yrts)*mub*(1000.*Vs/c)*math.sin(b)*math.sin(l) - (mastorad/yrts)*mul*(1000.*Vs/c)*math.cos(l))
 

@@ -49,8 +49,8 @@ def fdotdotSB3calBH(ldeg,bdeg,dkpc,mul,mub,vrad):
     #MWPotential2014= [MWPotential2014,KeplerPotential(amp=4*10**6./bovy_conversion.mass_in_msol(par.Vs,par.Rskpc))] 
     MWPot = [MWPotential2014,KeplerPotential(amp=4*10**6./bovy_conversion.mass_in_msol(par.Vs,par.Rskpc))]  
 
-    appl = evaluateRforces(MWPot, Rpkpc/Rskpc,zkpc/Rskpc)*normForcetoSI
-    aspl = evaluateRforces(MWPot, Rskpc/Rskpc,0.0/Rskpc)*normForcetoSI
+    appl = -evaluateRforces(MWPot, Rpkpc/Rskpc,zkpc/Rskpc)*normForcetoSI
+    aspl = -evaluateRforces(MWPot, Rskpc/Rskpc,0.0/Rskpc)*normForcetoSI
     apz = evaluatezforces(MWPot, Rpkpc/Rskpc,zkpc/Rskpc)*normForcetoSI
 
 
@@ -60,7 +60,7 @@ def fdotdotSB3calBH(ldeg,bdeg,dkpc,mul,mub,vrad):
     coslpluslam = math.cos(l)*coslam - (Rskpc*math.sin(l)/Rpkpc)*math.sin(l)
 
     aTl1 = -(appl*(Rskpc*math.sin(l)/Rpkpc)-aspl*math.sin(l))
-    aTb1 = appl*coslam*math.sin(b)-apz*math.cos(b) + aspl*math.cos(l)*math.sin(b)
+    aTb1 = appl*coslam*math.sin(b)+apz*math.cos(b) + aspl*math.cos(l)*math.sin(b)
     aTnet1 = (aTl1**2. + aTb1**2.)**(0.5)
     alphaV1 = math.atan2(mub,mul)/par.degtorad
     alphaA1 = math.atan2(aTb1,aTl1)/par.degtorad

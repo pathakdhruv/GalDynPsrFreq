@@ -51,8 +51,8 @@ def fdotdotSB1calBH(ldeg,bdeg,dkpc,mul,mub,vrad):
     #MWPotential2014= [MWPotential2014,KeplerPotential(amp=4*10**6./bovy_conversion.mass_in_msol(par.Vs,par.Rskpc))] 
     MWPot = [MWPotential2014,KeplerPotential(amp=4*10**6./bovy_conversion.mass_in_msol(par.Vs,par.Rskpc))]   
 
-    appl = evaluateRforces(MWPot, Rpkpc/Rskpc,zkpc/Rskpc)*normForcetoSI
-    aspl = evaluateRforces(MWPot, Rskpc/Rskpc,0.0/Rskpc)*normForcetoSI
+    appl = -evaluateRforces(MWPot, Rpkpc/Rskpc,zkpc/Rskpc)*normForcetoSI
+    aspl = -evaluateRforces(MWPot, Rskpc/Rskpc,0.0/Rskpc)*normForcetoSI
     apz = evaluatezforces(MWPot, Rpkpc/Rskpc,zkpc/Rskpc)*normForcetoSI
 
 
@@ -62,7 +62,7 @@ def fdotdotSB1calBH(ldeg,bdeg,dkpc,mul,mub,vrad):
     coslpluslam = math.cos(l)*coslam - (Rskpc*math.sin(l)/Rpkpc)*math.sin(l)
 
     aTl1 = -(appl*(Rskpc*math.sin(l)/Rpkpc)-aspl*math.sin(l))
-    aTb1 = appl*coslam*math.sin(b)-apz*math.cos(b) + aspl*math.cos(l)*math.sin(b)
+    aTb1 = appl*coslam*math.sin(b)+apz*math.cos(b) + aspl*math.cos(l)*math.sin(b)
     aTnet1 = (aTl1**2. + aTb1**2.)**(0.5)
     alphaV1 = math.atan2(mub,mul)/par.degtorad
     alphaA1 = math.atan2(aTb1,aTl1)/par.degtorad
@@ -99,17 +99,20 @@ def fdotdotSB1calBH(ldeg,bdeg,dkpc,mul,mub,vrad):
     phiRzsun = normjerktoSI*evaluateRzderivs(MWPot,Rskpc/Rskpc,0.0/Rskpc)
     aspldot = phiR2sun*Rpdot + phiRzsun*zdot
     appldot = phiR2*Rpdot + phiRz*zdot
-    apzdot = phiRz*Rpdot + phiz2*zdot
+    if b>0:
+      apzdot = phiRz*Rpdot + phiz2*zdot
+    else:
+      apzdot = -(phiRz*Rpdot + phiz2*zdot)
     
     #if coslam != 0.0 and Rpkpc != 0.0 and math.cos(b) != 0.0:
     
     lamdot = (1./coslam)*((Rs*math.cos(l)*((mastorad/yrts)*mul))/((Rpkpc*kpctom)*math.cos(b)) - (Rs*math.sin(l)/((Rpkpc*kpctom)**2.))*Rpdot)  
     ardot1 = math.sin(b)*(appl*coslam + aspl*math.cos(l))*((mastorad/yrts)*mub)         
     ardot2 = math.cos(b)*(appldot*coslam + aspldot*math.cos(l))
-    ardot3 = apzdot*math.sin(b)
+    ardot3 = apzdot*math.sin(abs(b))
     ardot4 = appl*math.cos(b)*(Rskpc*math.sin(l)/Rpkpc)*lamdot
     ardot5 = aspl*math.sin(l)*((mastorad/yrts)*mul)
-    ardot6 = apz*math.cos(b)*((mastorad/yrts)*mub)
+    ardot6 = abs(apz)*math.cos(b)*((mastorad/yrts)*mub)*(b/abs(b))
     ardot = ardot1 - ardot2 - ardot3 + ardot4 + ardot5 - ardot6
    
     jerkt = (1./c)*(ardot - aT*((mastorad/yrts)*muT)*math.cos(alpha))   
